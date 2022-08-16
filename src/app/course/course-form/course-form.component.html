@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="mt-5">
+        <button class="btn btn-success" (click)="getData()">Fetch data</button>
+    </div>
+    <div *ngIf="showTable" class="mt-4">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Course id</th>
+                <th scope="col">Course name</th>
+                <th scope="col">Course category</th>
+                <th scope="col">Course level</th>
+                <th scope="col">Coordinator name</th>
+                <th scope="col">Coordinator email</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor = "let course of courses">
+                    <td>{{ course.courseId }}</td>
+                    <td>{{ course.courseName }}</td>
+                    <td>{{ course.courseCategory }}</td>
+                    <td>{{ course.courseLevel }}</td>
+                    <td>{{ course.coordinatorName }}</td>
+                    <td>{{ course.coordinatorEmail }}</td>
+                    <td>
+                        <button class="btn btn-primary" (click)="updateData(course)">
+                            <i class="fa fa-edit" ></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="!showTable" class="mt-4">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <h1 class="display-4">No data</h1>
+              <p class="lead">Click on fetch data button to search our courses!</p>
+            </div>
+          </div>
+    </div>
+    <div *ngIf="showForm">
+        <div class="container">
+            <form #form="ngForm" (submit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Course ID:</label>
+                            <input class="form-control" readonly [(ngModel)]="courseUpdate.courseId" type="text" name="cId" id="inputCourse">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Course category:</label>
+                            <input class="form-control" [(ngModel)]="courseUpdate.courseCategory" type="text" name="cCategory" id="cCategory">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Course level:</label>
+                            <input class="form-control" [(ngModel)]="courseUpdate.courseLevel" type="text" name="cLevel" id="cLevel">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Coordinator</label>
+                        <select class="form-control" [ngModelOptions]="{standalone:true}" (ngModelChange)="onSelectChange($event)" [(ngModel)]="courseUpdate.coordinator">
+                            <option *ngFor="let person of listPerson" [value]="person.id">
+                                {{person.personEmail}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
+        
+                        <button type="button" class="btn btn-danger ml-2">
+                            <i class="fa fa-arrow-alt-circle-left"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
